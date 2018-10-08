@@ -3,8 +3,8 @@ import Search from '../components/Search';
 
 export default class Home extends Component {
   render = () => (
-    <div class="container">
-      <div class="jumbotron">
+    <div className="container">
+      <div className="jumbotron">
         <Search />
       </div>
     </div>

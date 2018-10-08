@@ -11,15 +11,15 @@ class App extends Component {
   }
 
   render = () => (
-    <div class="container">
-      <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <ul class="nav">
-            <li class="nav-item">
-              <Link to={'/'} class="nav-link">Home</Link>
+    <div className="container">
+      <div className="container">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <ul className="nav">
+            <li className="nav-item">
+              <Link to={'/'} className="nav-link">Home</Link>
             </li>
             <li>
-              <Link to={'/searchResults'} class="nav-link">Search results</Link>
+              <Link to={'/searchResults'} className="nav-link">Search results</Link>
             </li>
           </ul>
         </nav>
