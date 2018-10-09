@@ -10,7 +10,8 @@ export default class SearchResults extends Component {
     super();
     this.state = {
       // tableData: [{id: 1, fullName: 'ololo', owner: 'trololo', stars: '12', url: 'someUrl', favorite: false}]
-      tableData: []
+      tableData: [],
+      value: 1
     }
   }
 
@@ -83,14 +84,45 @@ export default class SearchResults extends Component {
     });
   }
 
+  handleChange = (e) => {
+    if (e.target.value > 0) {
+      this.setState({value: e.target.value});
+    }
+  }
+
+  handleClick = () => {
+    const store = Store.getState();
+    const fullName = store.repData.full_name;
+    const page = this.state.value;
+    FetchApi.getData(fullName, page);
+  }
+
   render = () => (
     <div className="container">
       <div className="breadcrumb align-items-center"><Search /></div>
-      <p>SEARCH RESULTS</p>
       {this.state.tableData.length ? (
-        <div className="breadcrumb form-inline">
-          <button onClick={() => this.goToPrev()}>Prev</button>
-          <button onClick={() => this.goToNext()}>Next</button>
+        <div>
+          <p>SEARCH RESULTS</p>
+          <div>
+            <p>Number of pages: {Store.getState().repData.numOfPages}</p>
+          </div>
+          <div className="btn-group btn-group-toggle breadcrumb">
+            <button className="btn btn-outline-dark" onClick={() => this.goToPrev()}>Prev</button>
+            <button className="btn btn-outline-dark" onClick={() => this.goToNext()}>Next</button>
+            <div className="form-group mx-sm-3 mb-2">
+              <input
+                type="number"
+                min={1}
+                max={Store.getState().repData.numOfPages}
+                className="form-control"
+                placeholder="Input page number"
+                onChange={this.handleChange}
+              />
+            </div>
+            <button className="btn btn-primary mb-2" onClick={this.handleClick}>
+              Go
+            </button>
+          </div>
         </div>
       ) : null}
       <div id="results" ref={el => (this.el = el)}>
