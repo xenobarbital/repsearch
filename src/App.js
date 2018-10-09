@@ -2,14 +2,8 @@ import React, { Component } from 'react';
 import {Route, Link} from 'react-router-dom';
 import Home from './routes/Home';
 import SearchResults from './routes/SearchResults';
-import FetchApi from './helpers/FetchApi';
 
 class App extends Component {
-  // testing
-  componentWillMount() {
-    FetchApi.getData('RNRF/react-native-router-flux');
-  }
-
   render = () => (
     <div className="container">
       <div className="container">

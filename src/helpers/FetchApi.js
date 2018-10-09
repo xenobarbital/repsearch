@@ -1,8 +1,12 @@
+import Store from '../redux/Store';
+import ActionCreators from '../redux/ActionCreators';
+
 export default class FetchApi{
   static async getRepData(repName) {
     try {
       const response = await fetch(`https://api.github.com/repos/${repName}`);
       if (response.ok) {
+        console.log('Check response', response.ok);
         const jsonResponse = await response.json();
         const repData = {
           id: jsonResponse.id,
@@ -20,10 +24,12 @@ export default class FetchApi{
     }
   }
 
-  static async getForksData(repName) {
+  static async getForksData(repName, page = 1) {
     try {
-      const response = await fetch(`https://api.github.com/repos/${repName}/forks`);
+      const pageNumber = page > 1 ? `?page=${page}` : '';
+      const response = await fetch(`https://api.github.com/repos/${repName}/forks${pageNumber}`);
       if (response.ok) {
+        console.log('Check response', response.ok);
         const jsonResponse = await response.json();
         const forksData = jsonResponse.map(elem => ({
           id: elem.id,
@@ -42,10 +48,20 @@ export default class FetchApi{
     }
   }
 
-  static async getData(repName) {
-    const repData = await FetchApi.getRepData(repName);
-    const forksData = await FetchApi.getForksData(repName);
-    console.log('Repository data', repData);
-    console.log('Forks data', forksData);
+  static async getData(repName, page) {
+    const currentStore = Store.getState();
+    if (repName !== currentStore.repData.full_name) {
+      const repData = await FetchApi.getRepData(repName);
+      const forksData = await FetchApi.getForksData(repName);
+      console.log('RepData', repData);
+      console.log('ForkData', forksData);
+      Store.dispatch(ActionCreators.getRepData(repData));
+      Store.dispatch(ActionCreators.getListing(forksData));
+      Store.dispatch(ActionCreators.changePage());
+    } else if (repName === currentStore.repData.full_name && page !== currentStore.currentPage) {
+      const forksData = await FetchApi.getForksData(repName, page);
+      Store.dispatch(ActionCreators.getListing(forksData));
+      Store.dispatch(ActionCreators.changePage(page));
+    }
   }
 }

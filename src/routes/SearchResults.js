@@ -3,6 +3,8 @@ import Search from '../components/Search';
 import Tabulator from 'tabulator-tables';
 import 'tabulator-tables/dist/css/tabulator.min.css';
 
+import Store from '../redux/Store';
+
 export default class SearchResults extends Component {
   constructor() {
     super();
@@ -15,6 +17,7 @@ export default class SearchResults extends Component {
   tabulator = null
 
   componentDidMount() {
+    console.log('Ich bin DA STORE!', Store.getState());
     this.renderTable();
   }
 
@@ -34,7 +37,7 @@ export default class SearchResults extends Component {
 
   render = () => (
     <div className="container">
-      <div class="breadcrumb align-items-center"><Search /></div>
+      <div className="breadcrumb align-items-center"><Search /></div>
       <p>SEARCH RESULTS</p>
       <div id="results" ref={el => (this.el = el)}>
 
