@@ -5,7 +5,7 @@ export default class Home extends Component {
   render = () => (
     <div className="container">
       <div className="jumbotron">
-        <Search />
+        <Search homePage />
       </div>
     </div>
   )
