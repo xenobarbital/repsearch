@@ -11,3 +11,5 @@ Below you will find some information on how to perform common tasks.<br>
 * Install the packages: `npm install` or `yarn`
 
 * Run the application: `npm start` or `yarn start`
+
+* Search inputs must be in following format `rep_creator/rep_name` i.e. `Microsoft/vscode`

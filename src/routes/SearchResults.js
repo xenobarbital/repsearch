@@ -9,14 +9,13 @@ export default class SearchResults extends Component {
   constructor() {
     super();
     this.state = {
-      // tableData: [{id: 1, fullName: 'ololo', owner: 'trololo', stars: '12', url: 'someUrl', favorite: false}]
       tableData: [],
       value: 1
     }
   }
 
-  // divRef = React.createRef();
   tabulator = null
+  unsubscribe = null
 
   renderListing(rawData) {
     if (rawData.length) {
@@ -39,14 +38,14 @@ export default class SearchResults extends Component {
     this.renderListing(listing);
   }
 
+
   componentDidMount() {
-    // this.renderTable();
-    Store.subscribe(() => this.listener());
+    this.unsubscribe = Store.subscribe(() => this.listener());
   }
 
-  // componentWilUnmount() {
-  //   Store.subscribe(() => this.listener());
-  // }
+  componentWilUnmount() {
+    this.unsubscribe();
+  }
 
 
   goToNext() {
